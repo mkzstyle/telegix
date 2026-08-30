@@ -1,0 +1,2 @@
+export type RouteHandler<T=Record<string,unknown>> = (update:T) => void | Promise<void>
+export class Router<T extends Record<string,unknown>=Record<string,unknown>> { private routes:Array<[string,RouteHandler<T>]> = []; on(key:string,handler:RouteHandler<T>) { this.routes.push([key,handler]); return this } async handle(update:T) { for (const [key,handler] of this.routes) if (key in update) await handler(update) } }

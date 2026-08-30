@@ -1,0 +1,3 @@
+export function serialize(value:unknown):unknown { if (value === undefined) return undefined; if (Array.isArray(value)) return JSON.stringify(value.map(serialize)); if (value && typeof value === 'object' && !(value instanceof Blob)) return JSON.stringify(value); return value }
+export function validateRequired(params:Record<string,unknown>, required:string[]) { for (const key of required) if (params[key] === undefined || params[key] === null) throw new TypeError(`Missing required parameter: ${key}`); return params }
+export function isRecord(value:unknown):value is Record<string,unknown> { return !!value && typeof value === 'object' && !Array.isArray(value) }
